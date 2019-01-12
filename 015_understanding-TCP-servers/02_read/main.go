@@ -8,14 +8,14 @@ import (
 )
 
 func main() {
-	li, err := net.Listen("tcp", ":8080")
+	listener, err := net.Listen("tcp", ":8080")
 	if err != nil {
 		log.Fatalln(err)
 	}
-	defer li.Close()
+	defer listener.Close()
 
 	for {
-		conn, err := li.Accept()
+		conn, err := listener.Accept()
 		if err != nil {
 			log.Println(err)
 			continue
@@ -27,13 +27,12 @@ func main() {
 func handle(conn net.Conn) {
 	scanner := bufio.NewScanner(conn)
 	for scanner.Scan() {
-		ln := scanner.Text()
-		fmt.Println(ln)
+	// by default the "token" which scan is looking for is a line of text
+		line := scanner.Text()
+		fmt.Println(line)
 	}
 	defer conn.Close()
 
-	// we never get here
-	// we have an open stream connection
-	// how does the above reader know when it's done?
+	// Code never gets here cause line 29 is an infinite loop
 	fmt.Println("Code got here.")
 }
