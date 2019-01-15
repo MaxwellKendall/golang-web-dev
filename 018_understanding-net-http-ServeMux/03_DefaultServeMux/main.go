@@ -7,22 +7,23 @@ import (
 
 type hotdog int
 
-func (d hotdog) ServeHTTP(res http.ResponseWriter, req *http.Request) {
+func d(res http.ResponseWriter, req *http.Request) {
 	io.WriteString(res, "dog dog dog")
 }
 
 type hotcat int
 
-func (c hotcat) ServeHTTP(res http.ResponseWriter, req *http.Request) {
+func c(res http.ResponseWriter, req *http.Request) {
 	io.WriteString(res, "cat cat cat")
 }
 
 func main() {
-	var d hotdog
-	var c hotcat
+	// var d hotdog
+	// var c hotcat
 
-	http.Handle("/dog", d)
-	http.Handle("/cat", c)
+	// Using HandleFunc to set the defaultServeMux
+	http.HandleFunc("/dog", d)
+	http.HandleFunc("/cat", c)
 
 	http.ListenAndServe(":8080", nil)
 }
