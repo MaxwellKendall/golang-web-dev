@@ -18,8 +18,8 @@ func meHandler(rw http.ResponseWriter, req *http.Request) {
 }
 
 func main() {
-	http.HandleFunc("/", indexHandler)
-	http.HandleFunc("/dog/", dogHandler)
-	http.HandleFunc("/me/", meHandler)
+	http.Handle("/", http.HandlerFunc(indexHandler))
+	http.Handle("/dog/", http.HandlerFunc(dogHandler))
+	http.Handle("/me/", http.HandlerFunc(meHandler))
 	http.ListenAndServe(":8080", nil);
 }
